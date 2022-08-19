@@ -8,6 +8,19 @@ public class CustomerTest {
     private static final String REGULAR_MOVIE_NAME = "The IT Crowd";
     private static final String NEW_RELEASE__MOVIE_NAME = "RRR";
     private static final String CHILDREN_MOVIE_NAME = "Frozen";
+
+    @Test
+    public void outputStatementForCustomerWithNoRental() {
+        Customer customer = new Customer(CUSTOMER_NAME);
+
+        String actualStatement = customer.statement();
+        String expectedStatement = "Rental Record for " + CUSTOMER_NAME + "\n";
+        expectedStatement += "Amount owed is 0.0\n";
+        expectedStatement += "You earned 0 frequent renter points";
+
+        Assert.assertEquals(actualStatement, expectedStatement);
+    }
+
     @Test
     public void outputStatementForARegularMovie() {
         Customer customer = new Customer(CUSTOMER_NAME);
