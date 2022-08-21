@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
-    private String name;
-    private List<Rental> rentals = new ArrayList<>();
+    private final String name;
+    private final List<Rental> rentals = new ArrayList<>();
 
     public Customer(String name) {
         this.name = name;
@@ -19,39 +19,51 @@ public class Customer {
         return name;
     }
 
-    public String statement() {
-        int frequentRenterPoints = 0;
+    public String outputStatement() {
+        return outputCustomerStatementAsString();
+    }
+
+    public String outputCustomerStatementAsString() {
         String statement = "Rental Record for " + getName() + "\n";
-        
-        for (Rental rental : rentals) {
-            Movie movie = rental.getMovie();
-            int dayRented = rental.getDaysRented();
-            frequentRenterPoints = addFrequentRenterPoints(movie, dayRented, frequentRenterPoints);
 
-            double rentalAmount = calculateRentalAmount(movie, dayRented);
-
-            statement += "\t" + movie.getTitle() + "\t" + rentalAmount + "\n";
+        List<RentalInfo> rentalInfoList = extractRentalInfo(rentals);
+        for (RentalInfo rentalInfo : rentalInfoList) {
+            statement += "\t" + rentalInfo.movieTitle + "\t" + rentalInfo.rentalAmount + "\n";
         }
 
-        statement += "Amount owed is " + calculateTotalAmount(rentals) + "\n";
-        statement += "You earned " + frequentRenterPoints
+        statement += "Amount owed is " + calculateTotalRentalAmount(rentals) + "\n";
+        statement += "You earned " + calculateTotalPoints(rentals)
                 + " frequent renter points";
+
         return statement;
     }
 
-    public double calculateTotalAmount(List<Rental> rentals) {
+    private List<RentalInfo> extractRentalInfo(List<Rental> rentals) {
+        List<RentalInfo> rentalInfoList = new ArrayList<>();
+        for (Rental rental : rentals) {
+            double rentalAmount = calculateRentalAmount(rental);
+            String movieTitle = rental.getMovie().getTitle();
+
+            RentalInfo rentalInfo = new RentalInfo(movieTitle, rentalAmount);
+            rentalInfoList.add(rentalInfo);
+        }
+        return rentalInfoList;
+    }
+
+    private double calculateTotalRentalAmount(List<Rental> rentals) {
         double totalAmount = 0;
         for (Rental rental : rentals) {
-            totalAmount += calculateRentalAmount(rental.getMovie(), rental.getDaysRented());
+            totalAmount += calculateRentalAmount(rental);
         }
         return totalAmount;
     }
-    public double calculateRentalAmount(Movie movie, int dayRented) {
+    private double calculateRentalAmount(Rental rental) {
         double amount = 0;
-        switch (movie.getPriceCode()) {
+        int dayRented = rental.getDaysRented();
+        switch (rental.getMovie().getPriceCode()) {
             case Movie.REGULAR:
                 amount += 2;
-                if (dayRented > 2)
+                if (rental.getDaysRented() > 2)
                     amount += (dayRented - 2) * 1.5;
                 break;
             case Movie.NEW_RELEASE:
@@ -66,15 +78,32 @@ public class Customer {
         return amount;
     }
 
-    public int addFrequentRenterPoints(Movie movie, int dayRented, int frequentRenterPoints) {
+    private int addFrequentPoints(Rental rental, int frequentRenterPoints) {
             frequentRenterPoints++;
 
-            if ((movie.getPriceCode() == Movie.NEW_RELEASE)
+            if ((rental.getMovie().getPriceCode() == Movie.NEW_RELEASE)
                     &&
-                    dayRented > 1)
+                    rental.getDaysRented() > 1)
                 frequentRenterPoints++;
 
             return frequentRenterPoints;
+    }
+    private int calculateTotalPoints(List<Rental> rentals) {
+        int points = 0;
+        for (Rental rental : rentals) {
+            points = addFrequentPoints(rental, points);
+        }
+        return points;
+    }
+
+    private static class RentalInfo {
+        private final String movieTitle;
+        private final double rentalAmount;
+
+        public RentalInfo(String title, double amount) {
+            this.movieTitle = title;
+            this.rentalAmount = amount;
+        }
     }
 }
 
