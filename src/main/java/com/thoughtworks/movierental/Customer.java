@@ -24,40 +24,49 @@ public class Customer {
     }
 
     public String outputCustomerStatementAsString() {
-        String statement = "Rental Record for " + getName() + "\n";
+        CustomerRentalSummary customerRentalSummary = getCustomerRentalSummary(rentals);
+        String statement = "Rental Record for " + customerRentalSummary.customerName + "\n";
 
-        List<RentalInfo> rentalInfoList = extractRentalInfo(rentals);
-        for (RentalInfo rentalInfo : rentalInfoList) {
-            statement += "\t" + rentalInfo.movieTitle + "\t" + rentalInfo.rentalAmount + "\n";
+        for (RentalInfo rentalInfo : customerRentalSummary.rentalInfoList) {
+            statement += "\t" + rentalInfo.movieTitle + "\t" + rentalInfo.cost + "\n";
         }
 
-        statement += "Amount owed is " + calculateTotalRentalAmount(rentals) + "\n";
-        statement += "You earned " + calculateTotalPoints(rentals)
+        statement += "Amount owed is " + customerRentalSummary.totalCost + "\n";
+        statement += "You earned " + customerRentalSummary.totalPoints
                 + " frequent renter points";
 
         return statement;
     }
 
-    private List<RentalInfo> extractRentalInfo(List<Rental> rentals) {
+    private CustomerRentalSummary getCustomerRentalSummary(List<Rental> rentals) {
+        String customerName = getName();
+        List<RentalInfo> rentalInfoList = getRentalInfoList(rentals);
+        double totalCost = calculateTotalRentalCost(rentals);
+        int totalPoints = calculateTotalPoints(rentals);
+
+        return new CustomerRentalSummary(customerName, totalCost, totalPoints, rentalInfoList);
+    }
+
+    private List<RentalInfo> getRentalInfoList(List<Rental> rentals) {
         List<RentalInfo> rentalInfoList = new ArrayList<>();
         for (Rental rental : rentals) {
-            double rentalAmount = calculateRentalAmount(rental);
+            double cost = calculateRentalCost(rental);
             String movieTitle = rental.getMovie().getTitle();
 
-            RentalInfo rentalInfo = new RentalInfo(movieTitle, rentalAmount);
+            RentalInfo rentalInfo = new RentalInfo(movieTitle, cost);
             rentalInfoList.add(rentalInfo);
         }
         return rentalInfoList;
     }
 
-    private double calculateTotalRentalAmount(List<Rental> rentals) {
-        double totalAmount = 0;
+    private double calculateTotalRentalCost(List<Rental> rentals) {
+        double totalCost = 0;
         for (Rental rental : rentals) {
-            totalAmount += calculateRentalAmount(rental);
+            totalCost += calculateRentalCost(rental);
         }
-        return totalAmount;
+        return totalCost;
     }
-    private double calculateRentalAmount(Rental rental) {
+    private double calculateRentalCost(Rental rental) {
         double amount = 0;
         int dayRented = rental.getDaysRented();
         switch (rental.getMovie().getPriceCode()) {
@@ -98,11 +107,29 @@ public class Customer {
 
     private static class RentalInfo {
         private final String movieTitle;
-        private final double rentalAmount;
+        private final double cost;
 
-        public RentalInfo(String title, double amount) {
+        public RentalInfo(String title, double cost) {
             this.movieTitle = title;
-            this.rentalAmount = amount;
+            this.cost = cost;
+        }
+    }
+
+    private static class CustomerRentalSummary {
+        private String customerName;
+        private double totalCost;
+        private int totalPoints;
+        private List<RentalInfo> rentalInfoList;
+
+        public CustomerRentalSummary(
+                String customerName,
+                double totalCost,
+                int totalPoints,
+                List<RentalInfo> rentalInfoList) {
+            this.customerName = customerName;
+            this.totalCost = totalCost;
+            this.totalPoints = totalPoints;
+            this.rentalInfoList =rentalInfoList;
         }
     }
 }
