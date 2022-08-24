@@ -20,11 +20,16 @@ public class Customer {
     }
 
     public String outputStatement() {
-        return outputCustomerStatementAsString();
+        CustomerRentalSummary customerRentalSummary = getCustomerRentalSummary(rentals);
+        return outputCustomerStatementAsString(customerRentalSummary);
     }
 
-    public String outputCustomerStatementAsString() {
+    public String outputHtmlStatement() {
         CustomerRentalSummary customerRentalSummary = getCustomerRentalSummary(rentals);
+        return outputCustomerStatementInHtml(customerRentalSummary);
+    }
+
+    public String outputCustomerStatementAsString(CustomerRentalSummary customerRentalSummary) {
         String statement = "Rental Record for " + customerRentalSummary.customerName + "\n";
 
         for (RentalInfo rentalInfo : customerRentalSummary.rentalInfoList) {
@@ -34,6 +39,20 @@ public class Customer {
         statement += "Amount owed is " + customerRentalSummary.totalCost + "\n";
         statement += "You earned " + customerRentalSummary.totalPoints
                 + " frequent renter points";
+
+        return statement;
+    }
+
+    public String outputCustomerStatementInHtml(CustomerRentalSummary customerRentalSummary) {
+        String statement = "<h1>Rental Record for <b>" + customerRentalSummary.customerName + "</b></h1><p>";
+
+        for (RentalInfo rentalInfo : customerRentalSummary.rentalInfoList) {
+            statement += rentalInfo.movieTitle + ": <b>" + rentalInfo.cost + "</b><br/>";
+        }
+
+        statement += "</p><p>Amount owed is <b>" + customerRentalSummary.totalCost + "</b></p></br>";
+        statement += "<p>You earned <b>" + customerRentalSummary.totalPoints
+                + "</b> frequent renter points</p></br>";
 
         return statement;
     }
