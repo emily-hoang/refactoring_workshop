@@ -1,6 +1,9 @@
-package com.thoughtworks.movierental;
+package com.thoughtworks.movierental.Formatter;
 
-public class HtmlStatementFormatter extends StatementFormatter {
+import com.thoughtworks.movierental.Customer.CustomerRentalSummary;
+import com.thoughtworks.movierental.Movie.MovieInfo;
+
+public class HtmlStatementFormatter implements IStatementFormatter {
     public String outputStatement(CustomerRentalSummary customerRentalSummary) {
         String statement = "<h1>Rental Record for <b>" + customerRentalSummary.customerName + "</b></h1><p>";
 

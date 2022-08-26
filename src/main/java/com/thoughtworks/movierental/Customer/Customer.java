@@ -1,4 +1,4 @@
-package com.thoughtworks.movierental;
+package com.thoughtworks.movierental.Customer;
 
 import java.util.ArrayList;
 import java.util.List;

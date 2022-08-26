@@ -1,28 +1,30 @@
-package com.thoughtworks.movierental;
+package com.thoughtworks.movierental.Customer;
+
+import com.thoughtworks.movierental.Formatter.HtmlStatementFormatter;
+import com.thoughtworks.movierental.Formatter.IStatementFormatter;
+import com.thoughtworks.movierental.Formatter.TextStatementFormatter;
+import com.thoughtworks.movierental.Movie.Movie;
+import com.thoughtworks.movierental.Movie.MovieInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerService {
     private Customer customer;
-    private IFormatterFactory formatterFactory;
 
-    public CustomerService(Customer customer, IFormatterFactory formatterFactory) {
+    public CustomerService(Customer customer) {
         this.customer = customer;
-        this.formatterFactory = formatterFactory;
     }
 
     public String outputStatementAsString() {
         CustomerRentalSummary customerRentalSummary = getCustomerRentalSummary(customer.getRentals());
-        IFormatterFactory factory = new TextFormatterFactory();
-        IStatementFormatter formatter = factory.createFormatter();
+        IStatementFormatter formatter = new TextStatementFormatter();
         return formatter.outputStatement(customerRentalSummary);
     }
 
     public String outputHtmlStatement() {
         CustomerRentalSummary customerRentalSummary = getCustomerRentalSummary(customer.getRentals());
-        IFormatterFactory factory = new HtmlFormatterFactory();
-        IStatementFormatter formatter = factory.createFormatter();
+        IStatementFormatter formatter = new HtmlStatementFormatter();
         return formatter.outputStatement(customerRentalSummary);
     }
 

@@ -1,5 +1,9 @@
 package com.thoughtworks.movierental;
 
+import com.thoughtworks.movierental.Customer.Customer;
+import com.thoughtworks.movierental.Customer.CustomerService;
+import com.thoughtworks.movierental.Customer.Rental;
+import com.thoughtworks.movierental.Movie.Movie;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,8 +16,7 @@ public class CustomerServiceTest {
     @Test
     public void outputStatementForCustomerWithNoRental() {
         Customer customer = new Customer(CUSTOMER_NAME);
-        IFormatterFactory factory = new TextFormatterFactory();
-        CustomerService customerService = new CustomerService(customer, factory);
+        CustomerService customerService = new CustomerService(customer);
 
         String actualStatement = customerService.outputStatementAsString();
         String expectedStatement = "Rental Record for " + CUSTOMER_NAME + "\n";
@@ -26,8 +29,7 @@ public class CustomerServiceTest {
     @Test
     public void outputCustomerStatementWithARegularMovie() {
         Customer customer = new Customer(CUSTOMER_NAME);
-        IFormatterFactory factory = new TextFormatterFactory();
-        CustomerService customerService = new CustomerService(customer, factory);
+        CustomerService customerService = new CustomerService(customer);
         Movie regularMovie = new Movie("The IT Crowd", 0);
         Rental rental = new Rental(regularMovie, 2);
         customer.addRental(rental);
@@ -47,8 +49,7 @@ public class CustomerServiceTest {
         Movie newReleaseMovie = new Movie(NEW_RELEASE_MOVIE_NAME, 1);
         Rental rental = new Rental(newReleaseMovie, 3);
         Customer customer = new Customer(CUSTOMER_NAME);
-        IFormatterFactory factory = new TextFormatterFactory();
-        CustomerService customerService = new CustomerService(customer, factory);
+        CustomerService customerService = new CustomerService(customer);
 
 
         customer.addRental(rental);
@@ -68,8 +69,7 @@ public class CustomerServiceTest {
         Movie newReleaseMovie = new Movie(NEW_RELEASE_MOVIE_NAME, 1);
         Rental rental = new Rental(newReleaseMovie, 1);
         customer.addRental(rental);
-        IFormatterFactory factory = new TextFormatterFactory();
-        CustomerService customerService = new CustomerService(customer, factory);
+        CustomerService customerService = new CustomerService(customer);
 
         String actualStatement = customerService.outputStatementAsString();
         String expectedStatement = "Rental Record for " + CUSTOMER_NAME + "\n";
@@ -86,8 +86,7 @@ public class CustomerServiceTest {
         Movie newReleaseMovie = new Movie(CHILDREN_MOVIE_NAME, 1);
         Rental rental = new Rental(newReleaseMovie, 3);
         customer.addRental(rental);
-        IFormatterFactory factory = new TextFormatterFactory();
-        CustomerService customerService = new CustomerService(customer, factory);
+        CustomerService customerService = new CustomerService(customer);
 
         String actualStatement = customerService.outputStatementAsString();
         String expectedStatement = "Rental Record for " + CUSTOMER_NAME + "\n";
@@ -107,8 +106,7 @@ public class CustomerServiceTest {
         Rental rental2 = new Rental(movie2, 3);
         customer.addRental(rental1);
         customer.addRental(rental2);
-        IFormatterFactory factory = new HtmlFormatterFactory();
-        CustomerService customerService = new CustomerService(customer, factory);
+        CustomerService customerService = new CustomerService(customer);
 
         String actualStatement = customerService.outputHtmlStatement();
         String expectedStatement = "<h1>Rental Record for <b>" + CUSTOMER_NAME + "</b></h1>" +
@@ -124,8 +122,7 @@ public class CustomerServiceTest {
     @Test
     public void outputHTMLStatementForCustomerWithNoMovies() {
         Customer customer = new Customer(CUSTOMER_NAME);
-        IFormatterFactory factory = new HtmlFormatterFactory();
-        CustomerService customerService = new CustomerService(customer, factory);
+        CustomerService customerService = new CustomerService(customer);
 
         String actualStatement = customerService.outputHtmlStatement();
         String expectedStatement = "<h1>Rental Record for <b>" + CUSTOMER_NAME + "</b></h1><p>" +

@@ -1,4 +1,4 @@
-package com.thoughtworks.movierental;
+package com.thoughtworks.movierental.Movie;
 
 
 public enum MovieCategory {

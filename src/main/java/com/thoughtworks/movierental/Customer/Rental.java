@@ -1,4 +1,6 @@
-package com.thoughtworks.movierental;
+package com.thoughtworks.movierental.Customer;
+
+import com.thoughtworks.movierental.Movie.Movie;
 
 public class Rental {
 

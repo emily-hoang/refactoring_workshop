@@ -1,6 +1,8 @@
-package com.thoughtworks.movierental;
+package com.thoughtworks.movierental.Movie;
 
-import static com.thoughtworks.movierental.Movie.*;
+import com.thoughtworks.movierental.Customer.Rental;
+
+import static com.thoughtworks.movierental.Movie.Movie.*;
 
 public class MovieCalculator {
     public Rental getRental() {
