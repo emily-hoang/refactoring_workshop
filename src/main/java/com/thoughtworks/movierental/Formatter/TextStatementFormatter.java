@@ -4,7 +4,7 @@ import com.thoughtworks.movierental.Customer.CustomerRentalSummary;
 import com.thoughtworks.movierental.Movie.MovieInfo;
 
 public class TextStatementFormatter implements IStatementFormatter {
-    public String outputStatement(CustomerRentalSummary customerRentalSummary) {
+    public String buildStatement(CustomerRentalSummary customerRentalSummary) {
         String statement = "Rental Record for " + customerRentalSummary.getCustomerName() + "\n";
 
         for (MovieInfo movieInfo : customerRentalSummary.getMovieInfoList()) {

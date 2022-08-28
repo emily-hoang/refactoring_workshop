@@ -3,5 +3,5 @@ package com.thoughtworks.movierental.Formatter;
 import com.thoughtworks.movierental.Customer.CustomerRentalSummary;
 
 public interface IStatementFormatter {
-    String outputStatement(CustomerRentalSummary customerRentalSummary);
+    String buildStatement(CustomerRentalSummary customerRentalSummary);
 }
