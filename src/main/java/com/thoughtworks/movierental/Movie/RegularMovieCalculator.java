@@ -10,4 +10,4 @@ public class RegularMovieCalculator extends MovieCalculator{
             amount += (dayRented - 2) * 1.5;
         return amount;
     }
-    }
+}

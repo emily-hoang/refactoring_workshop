@@ -9,4 +9,14 @@ public class NewReleaseMovieCalculator extends MovieCalculator{
         amount = dayRented * 3;
         return amount;
     }
+    @Override
+    public int addFrequentPoints(Rental rental) {
+        int frequentRenterPoints = 0;
+        frequentRenterPoints++;
+
+        if (rental.getDaysRented() > 1)
+            frequentRenterPoints++;
+
+        return frequentRenterPoints;
+    }
 }

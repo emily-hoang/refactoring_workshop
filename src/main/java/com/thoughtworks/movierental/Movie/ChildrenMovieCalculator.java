@@ -3,6 +3,7 @@ package com.thoughtworks.movierental.Movie;
 import com.thoughtworks.movierental.Customer.Rental;
 
 public class ChildrenMovieCalculator extends MovieCalculator {
+
     public double calculateMovieCost(Rental rental) {
         int dayRented = rental.getDaysRented();
         double amount = 1.5;

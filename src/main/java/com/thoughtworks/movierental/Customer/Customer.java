@@ -62,20 +62,13 @@ public class Customer {
         }
         return totalCost;
     }
-    private int addFrequentPoints(Rental rental, int frequentRenterPoints) {
-        frequentRenterPoints++;
-
-        if ((rental.getMovie().getPriceCode() == Movie.NEW_RELEASE)
-                &&
-                rental.getDaysRented() > 1)
-            frequentRenterPoints++;
-
-        return frequentRenterPoints;
-    }
+    
     private int calculateTotalPoints(List<Rental> rentals) {
         int points = 0;
         for (Rental rental : rentals) {
-            points = addFrequentPoints(rental, points);
+            IMovieCalculator movieCalculator = createMovieCalculator(rental);
+            assert movieCalculator != null;
+            points += movieCalculator.addFrequentPoints(rental);
         }
         return points;
     }
