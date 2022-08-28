@@ -18,8 +18,7 @@ public class CustomerTest {
 
     @Test
     public void outputStatementForCustomerWithNoRental() {
-        MovieCalculator movieCalculator = new MovieCalculator();
-        Customer customer = new Customer(CUSTOMER_NAME, movieCalculator);
+        Customer customer = new Customer(CUSTOMER_NAME);
 
         IStatementFormatter textFormatter = new TextStatementFormatter();
         String actualStatement = customer.outputStatement(textFormatter);
@@ -31,8 +30,7 @@ public class CustomerTest {
     }
     @Test
     public void outputCustomerStatementWithARegularMovie() {
-        MovieCalculator movieCalculator = new MovieCalculator();
-        Customer customer = new Customer(CUSTOMER_NAME, movieCalculator);
+        Customer customer = new Customer(CUSTOMER_NAME);
         Movie regularMovie = new Movie("The IT Crowd", 0);
         Rental rental = new Rental(regularMovie, 2);
         customer.addRental(rental);
@@ -50,8 +48,7 @@ public class CustomerTest {
     public void outputCustomerStatementWithANewReleaseMovieWithMoreThan1DayRented() {
         Movie newReleaseMovie = new Movie(NEW_RELEASE_MOVIE_NAME, 1);
         Rental rental = new Rental(newReleaseMovie, 3);
-        MovieCalculator movieCalculator = new MovieCalculator();
-        Customer customer = new Customer(CUSTOMER_NAME, movieCalculator);
+        Customer customer = new Customer(CUSTOMER_NAME);
         customer.addRental(rental);
 
         IStatementFormatter textFormatter = new TextStatementFormatter();
@@ -65,8 +62,7 @@ public class CustomerTest {
     }
     @Test
     public void outputCustomerStatementWithANewReleaseMovieWithLessThan1DayRented() {
-        MovieCalculator movieCalculator = new MovieCalculator();
-        Customer customer = new Customer(CUSTOMER_NAME, movieCalculator);
+        Customer customer = new Customer(CUSTOMER_NAME);
         Movie newReleaseMovie = new Movie(NEW_RELEASE_MOVIE_NAME, 1);
         Rental rental = new Rental(newReleaseMovie, 1);
         customer.addRental(rental);
@@ -82,8 +78,7 @@ public class CustomerTest {
     }
     @Test
     public void outputCustomerStatementWithAChildrenMovie() {
-        MovieCalculator movieCalculator = new MovieCalculator();
-        Customer customer = new Customer(CUSTOMER_NAME, movieCalculator);
+        Customer customer = new Customer(CUSTOMER_NAME);
         Movie newReleaseMovie = new Movie(CHILDREN_MOVIE_NAME, 1);
         Rental rental = new Rental(newReleaseMovie, 3);
         customer.addRental(rental);
@@ -99,8 +94,7 @@ public class CustomerTest {
     }
     @Test
     public void outputHTMLStatementForCustomerWithMultipleMovies() {
-        MovieCalculator movieCalculator = new MovieCalculator();
-        Customer customer = new Customer(CUSTOMER_NAME, movieCalculator);
+        Customer customer = new Customer(CUSTOMER_NAME);
         Movie movie1 = new Movie(CHILDREN_MOVIE_NAME, 2);
         Rental rental1 = new Rental(movie1, 3);
         Movie movie2 = new Movie(NEW_RELEASE_MOVIE_NAME, 1);
@@ -121,8 +115,7 @@ public class CustomerTest {
     }
     @Test
     public void outputHTMLStatementForCustomerWithNoMovies() {
-        MovieCalculator movieCalculator = new MovieCalculator();
-        Customer customer = new Customer(CUSTOMER_NAME, movieCalculator);
+        Customer customer = new Customer(CUSTOMER_NAME);
         IStatementFormatter htmlFormatter = new HtmlStatementFormatter();
 
         String actualStatement = customer.outputStatement(htmlFormatter);

@@ -11,10 +11,8 @@ import static com.thoughtworks.movierental.Movie.Movie.*;
 public class Customer {
     private final String name;
     private final List<Rental> rentals = new ArrayList<>();
-    private final MovieCalculator movieCalculator;
-    public Customer(String name, MovieCalculator movieCalculator) {
+    public Customer(String name) {
         this.name = name;
-        this.movieCalculator = movieCalculator;
     }
 
     public void addRental(Rental arg) {
@@ -62,7 +60,7 @@ public class Customer {
         }
         return totalCost;
     }
-    
+
     private int calculateTotalPoints(List<Rental> rentals) {
         int points = 0;
         for (Rental rental : rentals) {
