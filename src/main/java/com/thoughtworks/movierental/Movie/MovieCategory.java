@@ -13,6 +13,4 @@ public enum MovieCategory {
     MovieCategory(int priceCode) {
         this.priceCode = priceCode;
     }
-
-
 }

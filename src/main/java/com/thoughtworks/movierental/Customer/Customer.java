@@ -80,6 +80,8 @@ public class Customer {
                 return new RegularMovieCalculator();
             case NEW_RELEASE:
                 return new NewReleaseMovieCalculator();
+            case BLU_RAY:
+                return new BluRayMovieCalculator();
         }
         return null;
     }
