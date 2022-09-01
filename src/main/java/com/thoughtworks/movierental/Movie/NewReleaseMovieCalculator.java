@@ -3,18 +3,17 @@ package com.thoughtworks.movierental.Movie;
 import com.thoughtworks.movierental.Customer.Rental;
 
 public class NewReleaseMovieCalculator extends MovieCalculator{
-    public double calculateMovieCost(Rental rental) {
-        int dayRented = rental.getDaysRented();
+    public double calculateMovieCost(int numOfDays) {
         double amount;
-        amount = dayRented * 3;
+        amount = numOfDays * 3;
         return amount;
     }
     @Override
-    public int addFrequentPoints(Rental rental) {
+    public int addFrequentPoints(int numOfDays) {
         int frequentRenterPoints = 0;
         frequentRenterPoints++;
 
-        if (rental.getDaysRented() > 1)
+        if (numOfDays > 1)
             frequentRenterPoints++;
 
         return frequentRenterPoints;

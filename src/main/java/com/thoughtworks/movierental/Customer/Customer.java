@@ -40,7 +40,7 @@ public class Customer {
             IMovieCalculator movieCalculator = createMovieCalculator(rental);
 
             assert movieCalculator != null;
-            double cost = movieCalculator.calculateMovieCost(rental);
+            double cost = movieCalculator.calculateMovieCost(rental.getDaysRented());
 
             String movieTitle = rental.getMovie().getTitle();
 
@@ -54,7 +54,7 @@ public class Customer {
         for (Rental rental : rentals) {
             IMovieCalculator movieCalculator = createMovieCalculator(rental);
             assert movieCalculator != null;
-            totalCost += movieCalculator.calculateMovieCost(rental);
+            totalCost += movieCalculator.calculateMovieCost(rental.getDaysRented());
         }
         return totalCost;
     }
@@ -64,7 +64,7 @@ public class Customer {
         for (Rental rental : rentals) {
             IMovieCalculator movieCalculator = createMovieCalculator(rental);
             assert movieCalculator != null;
-            points += movieCalculator.addFrequentPoints(rental);
+            points += movieCalculator.addFrequentPoints(rental.getDaysRented());
         }
         return points;
     }
