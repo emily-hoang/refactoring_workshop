@@ -6,8 +6,6 @@ import com.thoughtworks.movierental.Movie.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.thoughtworks.movierental.Movie.Movie.*;
-
 public class Customer {
     private final String name;
     private final List<Rental> rentals = new ArrayList<>();
@@ -72,8 +70,8 @@ public class Customer {
     }
 
     private IMovieCalculator createMovieCalculator(Rental rental) {
-        int priceCode = rental.getMovie().getPriceCode();
-        switch (priceCode) {
+        MovieCategory movieCategory = rental.getMovie().getMovieCategory();
+        switch (movieCategory) {
             case CHILDREN:
                 return new ChildrenMovieCalculator();
             case REGULAR:

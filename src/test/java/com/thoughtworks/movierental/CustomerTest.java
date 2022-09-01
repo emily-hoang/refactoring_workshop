@@ -6,7 +6,7 @@ import com.thoughtworks.movierental.Formatter.HtmlStatementFormatter;
 import com.thoughtworks.movierental.Formatter.IStatementFormatter;
 import com.thoughtworks.movierental.Formatter.TextStatementFormatter;
 import com.thoughtworks.movierental.Movie.Movie;
-import com.thoughtworks.movierental.Movie.MovieCalculator;
+import com.thoughtworks.movierental.Movie.MovieCategory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class CustomerTest {
     @Test
     public void outputCustomerStatementWithARegularMovie() {
         Customer customer = new Customer(CUSTOMER_NAME);
-        Movie regularMovie = new Movie("The IT Crowd", 0);
+        Movie regularMovie = new Movie("The IT Crowd", MovieCategory.REGULAR);
         Rental rental = new Rental(regularMovie, 2);
         customer.addRental(rental);
 
@@ -47,7 +47,7 @@ public class CustomerTest {
     }
     @Test
     public void outputCustomerStatementWithANewReleaseMovieWithMoreThan1DayRented() {
-        Movie newReleaseMovie = new Movie(NEW_RELEASE_MOVIE_NAME, 1);
+        Movie newReleaseMovie = new Movie(NEW_RELEASE_MOVIE_NAME, MovieCategory.NEW_RELEASE);
         Rental rental = new Rental(newReleaseMovie, 3);
         Customer customer = new Customer(CUSTOMER_NAME);
         customer.addRental(rental);
@@ -64,7 +64,7 @@ public class CustomerTest {
     @Test
     public void outputCustomerStatementWithANewReleaseMovieWithLessThan1DayRented() {
         Customer customer = new Customer(CUSTOMER_NAME);
-        Movie newReleaseMovie = new Movie(NEW_RELEASE_MOVIE_NAME, 1);
+        Movie newReleaseMovie = new Movie(NEW_RELEASE_MOVIE_NAME, MovieCategory.NEW_RELEASE);
         Rental rental = new Rental(newReleaseMovie, 1);
         customer.addRental(rental);
 
@@ -80,23 +80,23 @@ public class CustomerTest {
     @Test
     public void outputCustomerStatementWithAChildrenMovie() {
         Customer customer = new Customer(CUSTOMER_NAME);
-        Movie newReleaseMovie = new Movie(CHILDREN_MOVIE_NAME, 1);
-        Rental rental = new Rental(newReleaseMovie, 3);
+        Movie newReleaseMovie = new Movie(CHILDREN_MOVIE_NAME, MovieCategory.CHILDREN);
+        Rental rental = new Rental(newReleaseMovie, 5);
         customer.addRental(rental);
 
         IStatementFormatter textFormatter = new TextStatementFormatter();
         String actualStatement = customer.outputStatement(textFormatter);
         String expectedStatement = "Rental Record for " + CUSTOMER_NAME + "\n";
-        expectedStatement += "\t" + CHILDREN_MOVIE_NAME + "\t9.0\n";
-        expectedStatement += "Amount owed is 9.0\n";
-        expectedStatement += "You earned 2 frequent renter points";
+        expectedStatement += "\t" + CHILDREN_MOVIE_NAME + "\t4.5\n";
+        expectedStatement += "Amount owed is 4.5\n";
+        expectedStatement += "You earned 1 frequent renter points";
 
         Assert.assertEquals(actualStatement, expectedStatement);
     }
     @Test
     public void outputCustomerStatementWithABluRayMovie() {
         Customer customer = new Customer(CUSTOMER_NAME);
-        Movie blueRay = new Movie(BLU_RAY_MOVIE_NAME, 3);
+        Movie blueRay = new Movie(BLU_RAY_MOVIE_NAME, MovieCategory.BLU_RAY);
         Rental rental = new Rental(blueRay, 3);
         customer.addRental(rental);
 
@@ -112,11 +112,11 @@ public class CustomerTest {
     @Test
     public void outputHTMLStatementForCustomerWithMultipleMovies() {
         Customer customer = new Customer(CUSTOMER_NAME);
-        Movie movie1 = new Movie(CHILDREN_MOVIE_NAME, 2);
+        Movie movie1 = new Movie(CHILDREN_MOVIE_NAME, MovieCategory.CHILDREN);
         Rental rental1 = new Rental(movie1, 3);
-        Movie movie2 = new Movie(NEW_RELEASE_MOVIE_NAME, 1);
+        Movie movie2 = new Movie(NEW_RELEASE_MOVIE_NAME, MovieCategory.NEW_RELEASE);
         Rental rental2 = new Rental(movie2, 3);
-        Movie movie3 = new Movie(BLU_RAY_MOVIE_NAME, 3);
+        Movie movie3 = new Movie(BLU_RAY_MOVIE_NAME, MovieCategory.BLU_RAY);
         Rental rental3 = new Rental(movie3, 3);
         customer.addRental(rental1);
         customer.addRental(rental2);
